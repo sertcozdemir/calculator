@@ -1,0 +1,95 @@
+import react, { useState } from 'react';
+import { button } from './components/ui/button';
+import { input } from './components/ui/input';
+
+const calculator = () => {
+  const [num1, setNum1] = useState('');
+  const [num2, setNum2] = useState('');
+  const [result, setResult] = useState('');
+  const [operator, setOperator] = useState('');
+
+  const handleNum1 = (e: react.ChangeEvent<HTMLInputElement>) => {
+    setNum1(e.target.value);
+  };
+
+  const handleNum2 = (e: react.ChangeEvent<HTMLInputElement>) => {
+    setNum2(e.target.value);
+  };
+
+  const handleOperator = (op: string) => {
+    setOperator(op);
+  };
+
+  const calculate = () => {
+    let res = 0;
+    switch (operator) {
+      case '+':
+        res = parseFloat(num1) + parseFloat(num2);
+        break;
+      case '-':
+        res = parseFloat(num1) - parseFloat(num2);
+        break;
+      case '*':
+        res = parseFloat(num1) * parseFloat(num2);
+        break;
+      case '/':
+        res = parseFloat(num1) / parseFloat(num2);
+        break;
+      default:
+        break;
+    }
+    setResult(res.toString());
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <input
+        type="number"
+        value={num1}
+        onChange={handleNum1}
+        className="w-1/2 p-2 mb-4 border border-gray-400 rounded"
+      />
+      <div className="flex justify-between w-1/2 mb-4">
+        <button
+          onClick={() => handleOperator('+')}
+          className="p-2 mr-2 bg-gray-200 rounded"
+        >
+          +
+        </button>
+        <button
+          onClick={() => handleOperator('-')}
+          className="p-2 mr-2 bg-gray-200 rounded"
+        >
+          -
+        </button>
+        <button
+          onClick={() => handleOperator('*')}
+          className="p-2 mr-2 bg-gray-200 rounded"
+        >
+          *
+        </button>
+        <button
+          onClick={() => handleOperator('/')}
+          className="p-2 bg-gray-200 rounded"
+        >
+          /
+        </button>
+      </div>
+      <input
+        type="number"
+        value={num2}
+        onChange={handleNum2}
+        className="w-1/2 p-2 mb-4 border border-gray-400 rounded"
+      />
+      <button
+        onClick={calculate}
+        className="p-2 bg-gray-200 rounded"
+      >
+        Calculate
+      </button>
+      <p className="mt-4 text-lg font-bold">{result}</p>
+    </div>
+  );
+};
+
+export default calculator;
